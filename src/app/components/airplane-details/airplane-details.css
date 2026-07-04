@@ -1,0 +1,8 @@
+
+
+@layer components{
+    .cards{
+        background-color: var(--color-green);
+    }
+
+}
