@@ -20,6 +20,7 @@
        [maintenanceIntervalFlights]="airplane()!.maintenanceIntervalFlights"
        [flightsSinceLastMaintenance]="airplane()!.flightsSinceLastMaintenance"
        [status]="airplane()!.status"
+       (addFlight)="IncreaseFlights()"
        >
        </app-progress-bar>
     </mat-card-content>

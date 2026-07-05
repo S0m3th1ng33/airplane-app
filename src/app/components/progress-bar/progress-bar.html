@@ -1,5 +1,5 @@
-<div class="w-full h-6 bg-gray-400 rounded-full overflow-hidden">
-    <div [ngClass]="ProgressColor()" [style.width.%]="progress()"> </div>
+<div class="w-full h-6 bg-gray-400 rounded-full overflow-hidden" [class.dangerCondition]="progbarCheck()">
+    <div class="progBar" [ngClass]="conditionSignal()" [style.width.%]="progress()"><p class="w-full" [ngClass]="{'heliVisible': visibleHeli(), 'heliInvis': !visibleHeli()}">HELIKOPTER HEELIKOPTER</p></div>
 </div>
 
-<button mat-button (onclick)="AddFlight()">Add Flight</button>
+<button mat-button (click)="AddFlight()" [disabled]="progbarCheck()">Add Flight</button>

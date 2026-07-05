@@ -1,6 +1,7 @@
 import { NgClass } from '@angular/common';
-import { Component, computed, input, OnInit } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { MatAnchor } from "@angular/material/button";
+
 
 
 @Component({
@@ -10,34 +11,40 @@ import { MatAnchor } from "@angular/material/button";
   styleUrl: './progress-bar.css',
 })
 export class ProgressBar {
-  AddFlight() {
 
-  }
-  value = input<number>(0)
   maintenanceIntervalFlights = input<number>(0);
   flightsSinceLastMaintenance = input<number>(0);
   status = input<string>("");
+  addFlight = output();
+  progbarCheck = computed(() => {
+    return this.conditionSignal() == "dangerCondition"
+  });
+  visibleHeli = computed<boolean>(() => {
+    return this.flightsSinceLastMaintenance() >= 100;
+  })
 
-  constructor() {
-
-  }
+  conditionSignal = computed(() => {
+    const ratio = this.flightsSinceLastMaintenance() / this.maintenanceIntervalFlights();
+   
+    if (ratio >= 1) {
+      return "dangerCondition";
+    }
+    else if (ratio >= 0.75) {
+      return "badCondition";
+    }
+    else if (ratio >= 0.5) {
+      return "okCondition";
+    }
+    return "goodCondition";
+  });
 
   progress(): number {
-    return Math.min(this.flightsSinceLastMaintenance() / this.maintenanceIntervalFlights()) * 100
+    const ratio = this.flightsSinceLastMaintenance() / this.maintenanceIntervalFlights();
+    return ratio * 100
   }
 
-  ProgressColor(): string {
-    const value = this.flightsSinceLastMaintenance() / this.maintenanceIntervalFlights();
-    if (value >= 1) {
-      return "bg-red-600"
-    }
-    else if (value >= 0.75) {
-      return "bg-orange-500"
-    }
-    else if (value >= 0.5) {
-      return "bg-yellow-400"
-    }
-    return "bg-green-400";
+  AddFlight(): void {
+    this.addFlight.emit()
   }
 }
 

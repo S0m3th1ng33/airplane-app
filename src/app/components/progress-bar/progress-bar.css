@@ -1,0 +1,40 @@
+.goodCondition{
+    background: green;
+}
+.okCondition{
+    background-color: yellow;
+}
+.badCondition{
+    background-color: orange;
+}
+.dangerCondition{
+    background-color: red;
+    animation: myAnimation 500ms;
+    animation-iteration-count: 3;
+}
+
+.heliVisible{
+    opacity: 1;
+}
+.heliInvis{
+    opacity: 0;
+}
+
+p{
+    text-align: center;
+    color: white;
+}
+
+
+.progBar{
+    height: 100%;
+    transition: width 1s ease;
+}
+@keyframes myAnimation{
+    from{
+        transform:scale(100%) rotate(-180deg)
+    }
+    to {
+        transform: scale(110%) rotate(180deg)
+    }
+}

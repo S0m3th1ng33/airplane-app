@@ -24,11 +24,24 @@ export class AirplaneDetails implements OnInit {
   cardTCSS = "mx-auto flex rounded-xl max-w-md my-10"
 
   progress = computed(() => this.airplaneService.timeTillNextMaintenance(this.airplane()) * 100)
-  
+
   airplane = signal<Airplane | undefined>(undefined);
 
   ngOnInit() {
     const id = String(this.route.snapshot.paramMap.get('id'));
     this.airplane.set(this.airplaneService.getById(id));
+  }
+
+  IncreaseFlights() {
+    this.airplane?.update((value) => { 
+      value!.flightsSinceLastMaintenance++
+      console.log(value!.flightsSinceLastMaintenance)
+      if (value!.flightsSinceLastMaintenance >= 100)
+      {
+        value!.status = "maintenance";
+        console.log(value!.status);
+      }
+      return value;
+     });
   }
 }

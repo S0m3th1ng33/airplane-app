@@ -1,3 +1,4 @@
+
 <table mat-table [dataSource]="airplaneService.getAirplanes()">
   @for(column of getProperties(airplaneService.getAirplanes()); track column) {
   <ng-container [matColumnDef]="column">
@@ -8,3 +9,6 @@
   <tr mat-header-row  *matHeaderRowDef="getProperties(airplaneService.getAirplanes())"></tr>
   <tr mat-row *matRowDef="let airplane; columns: getProperties(airplaneService.getAirplanes());" [ngClass]="{'maintenance': airplane.status === 'maintenance'}"></tr>
 </table>
+<div class="button-container">
+  <button matButton="elevated" [routerLink]="['/airplanes/new']">Add Airplane</button>
+</div>

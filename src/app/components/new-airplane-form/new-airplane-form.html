@@ -1,0 +1,42 @@
+<form class="flex flex-col gap-4 max-w-md mx-auto my-10" (submit)="submitForm($event)">
+    <label>
+        Tail number
+        <input class="border rounded p-2 w-full" type="text" [formField]="airplaneForm.tailNumber" />
+        @if (airplaneForm.tailNumber().touched() && airplaneForm.tailNumber().invalid()) {
+        <mat-error class="text-red-600">
+            {{airplaneForm.tailNumber().errors()[0].message}}
+        </mat-error>
+        }
+    </label>
+
+    <label>
+        Model
+        <input class="border rounded p-2 w-full" type="text" [formField]="airplaneForm.model" />
+    </label>
+
+    <label>
+        Manufacturer
+        <input class="border rounded p-2 w-full" type="text" [formField]="airplaneForm.manufacturer" />
+    </label>
+
+    <label>
+        Capacity
+        <input class="border rounded p-2 w-full" type="number" [formField]="airplaneForm.capacity" />
+    </label>
+
+    <label>
+        Maintenance interval flights
+        <input class="border rounded p-2 w-full" type="number"
+            [formField]="airplaneForm.maintenance_details.maintenanceIntervalFlights" />
+    </label>
+
+    <label>
+        Flights since last maintenance
+        <input class="border rounded p-2 w-full" type="number"
+            [formField]="airplaneForm.maintenance_details.flightsSinceLastMaintenance" />
+    </label>
+
+    <button matButton="elevated" type="submit" (click)="addAirplaneClicked()">
+        Create airplane
+    </button>
+</form>
