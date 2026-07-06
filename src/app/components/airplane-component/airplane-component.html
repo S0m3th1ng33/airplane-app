@@ -1,14 +1,15 @@
-
-<table mat-table [dataSource]="airplaneService.getAirplanes()">
-  @for(column of getProperties(airplaneService.getAirplanes()); track column) {
-  <ng-container [matColumnDef]="column">
-    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-    <td mat-cell *matCellDef="let airplane"> <a [routerLink]="['/airplanes', airplane.id]">{{airplane[column] | tailNumber: column}}</a></td>
-  </ng-container>
-  }
-  <tr mat-header-row  *matHeaderRowDef="getProperties(airplaneService.getAirplanes())"></tr>
-  <tr mat-row *matRowDef="let airplane; columns: getProperties(airplaneService.getAirplanes());" [ngClass]="{'maintenance': airplane.status === 'maintenance'}"></tr>
-</table>
-<div class="button-container">
-  <button matButton="elevated" [routerLink]="['/airplanes/new']">Add Airplane</button>
-</div>
+@if ((airplanes$ | async); as planes)
+{
+  <table mat-table [dataSource]="planes">
+    @for(column of getProperties(planes); track column) {
+    <ng-container [matColumnDef]="column">
+      <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+      <td mat-cell *matCellDef="let airplane"> <a [routerLink]="['/airplanes', airplane.id]">{{airplane[column] |
+          tailNumber: column}}</a></td>
+    </ng-container>
+    }
+    <tr mat-header-row *matHeaderRowDef="getProperties(planes)"></tr>
+    <tr mat-row *matRowDef="let airplane; columns: getProperties(planes);"
+      [ngClass]="{'maintenance': airplane.status === 'maintenance'}"></tr>
+  </table>
+}

@@ -1,22 +1,35 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { share, Subject, tap } from 'rxjs';
+import { baseAPIPATH } from '../app';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AirplaneService {
 
-  private airplanes = signal<Array<Airplane>>([
+  private readonly http = inject(HttpClient)
+
+  private airplanesMock = signal<Array<Airplane>>([
     { id: '1', tailNumber: 'N12345', model: '737-800', manufacturer: 'Boeing', capacity: 189, status: 'active', maintenanceIntervalFlights: 100, flightsSinceLastMaintenance: 45 },
     { id: '2', tailNumber: 'N67890', model: 'A320', manufacturer: 'Airbus', capacity: 180, status: 'active', maintenanceIntervalFlights: 100, flightsSinceLastMaintenance: 92 },
     { id: '3', tailNumber: 'N11111', model: '787-9', manufacturer: 'Boeing', capacity: 296, status: 'maintenance', maintenanceIntervalFlights: 100, flightsSinceLastMaintenance: 100 },
   ]);
 
-  getAirplanes() {
-    return this.airplanes();
+  //Ezt nem lehet újra querry-zni
+  //readonly airplanes$ = this.http.get<Array<Airplane>>('/api/airplanes').pipe(share())
+
+  private readonly airplanes = this.http.get<Array<Airplane>>(`${baseAPIPATH}/airplanes`).pipe(share());
+  private readonly airPlanesSubject = new Subject<Array<Airplane>>();
+  readonly airplanes$ = this. airPlanesSubject.asObservable();
+
+  getAirplanes(){
+    return this.airplanes.pipe(tap(planes => this.airPlanesSubject.next(planes)))
   }
 
+
   getById(id: string) {
-    return this.airplanes().find(airplanes => airplanes.id === id);
+    return this.airplanesMock().find(airplanes => airplanes.id === id);
   }
 
   timeTillNextMaintenance(airplane?: Airplane): number {
@@ -27,7 +40,7 @@ export class AirplaneService {
   }
 
   latestAirplaneId = computed(() => {
-    return this.airplanes()[this.airplanes().length - 1].id;
+    return this.airplanesMock()[this.airplanesMock().length - 1].id;
   })
 
 
@@ -45,7 +58,7 @@ export class AirplaneService {
     }
       */
     console.log('Adding airplane', airPlane);
-    this.airplanes.update((asd) => [...asd, airPlane])
+    this.airplanesMock.update((asd) => [...asd, airPlane])
   }
 }
 

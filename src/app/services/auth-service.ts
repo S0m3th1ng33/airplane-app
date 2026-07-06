@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { map } from 'rxjs/internal/operators/map';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { catchError, Observable, of, switchMap } from 'rxjs';
 
 
 @Injectable({
@@ -8,22 +9,33 @@ import { map } from 'rxjs/internal/operators/map';
 })
 
 export class AuthService {
-  constructor(private http: HttpClient) {
 
-  }
+  private readonly http = inject(HttpClient)
+  private readonly sessionInfo = signal<SessionInfo | undefined>(undefined)
+  token = computed(() => this.sessionInfo()?.token)
+  user = computed(() => this.sessionInfo()?.user)
+  //compurted(() => !!this.sessionInfo()) works aswell (By: Traxi)
+  isLoggedIn = computed(() => this.sessionInfo() ? true : false)
+  router = inject(Router);
 
-  login(info: ILoginDetails) {
-    return this.http.post<ILoginToken>('http://localhost:3000/api/auth/login', info)
+
+  login(info: ILoginDetails): Observable<{ isSuccess: boolean, msg?: string }> {
+    return this.http.post<SessionInfo>('http://localhost:3000/api/auth/login', info)
       .pipe(
-        map(response => {
-          localStorage.setItem('token', response.token);
-          return response;
+        switchMap(response => {
+          if (response?.token) {
+            this.sessionInfo.set(response)
+          }
+          return of({ isSuccess: true })
+        }), catchError((error) => {
+          return of({ isSuccess: false, msg: error.error.error })
         })
       )
   }
 
   logout() {
-    localStorage.removeItem('token');
+    this.sessionInfo.set(undefined)
+    this.router.navigate(['/login'])
   }
 }
 
@@ -33,6 +45,12 @@ export interface ILoginDetails {
   password: string;
 }
 
-export interface ILoginToken {
-  token: string;
+
+export interface SessionInfo {
+  token: string
+  user: {
+    name: string,
+    id: string,
+    email: string
+  }
 }

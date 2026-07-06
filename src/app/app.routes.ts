@@ -3,18 +3,21 @@ import { AirplaneComponent } from './components/airplane-component/airplane-comp
 import { AirplaneDetails } from './components/airplane-details/airplane-details';
 import { NewAirplaneForm } from './components/new-airplane-form/new-airplane-form';
 import { Login } from './components/login/login';
+import { authGuard } from './auth-guard-guard';
 
 export const routes: Routes = [
     {
         path: 'airplanes',
         //Eager
         component: AirplaneComponent,
-        title: 'Airplanes'
+        title: 'Airplanes',
+        canActivate: [authGuard]
     },
     {
         path: 'airplanes/new',
         loadComponent: () => NewAirplaneForm,
-        title: 'New Airplane Form'
+        title: 'New Airplane Form',
+        canActivate: [authGuard]
     },
     {
         path: 'login',
@@ -25,6 +28,11 @@ export const routes: Routes = [
         path: 'airplanes/:id',
         //Lazy
         loadComponent: () => AirplaneDetails,
-        title: 'Airplanes details'
+        title: 'Airplanes details',
+        canActivate: [authGuard]
+    },
+    {
+        path: '**',
+        redirectTo: 'login'
     }
 ];

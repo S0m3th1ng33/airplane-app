@@ -33,11 +33,11 @@ export class Login {
 
   signIn() {
     this.authService.login(this.loginDetails()).subscribe(response => {
-      if (response) {
+      if (response.isSuccess) {
         this.router.navigate(['/airplanes']);
       }
       else {
-        this.snackbar.open('Invalid email or password', 'Close', {
+        this.snackbar.open(response.msg ?? 'Unknown error', 'Close', {
           duration: 3000,
           horizontalPosition: 'center',
           verticalPosition: 'top'
