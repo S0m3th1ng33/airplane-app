@@ -30,17 +30,22 @@ export class AirplaneService {
     return this.airplanes()[this.airplanes().length - 1].id;
   })
 
-  
+
   addAirplane(input: Airplane) {
     const airPlane = {
       ...input,
       id: String(Number(this.latestAirplaneId()) + 1)
     }
+    /*
+    This has been fixed in the Form component, now the automatic value is active
+
     //This should be in the backend logic, but for my own sanity i am doing the handling here
     if (airPlane.status !== 'inactive') {
       airPlane.status = airPlane.flightsSinceLastMaintenance < airPlane.maintenanceIntervalFlights ? 'active' : 'maintenance';
     }
-    this.airplanes.update((asd) => [...asd, airPlane] )
+      */
+    console.log('Adding airplane', airPlane);
+    this.airplanes.update((asd) => [...asd, airPlane])
   }
 }
 
