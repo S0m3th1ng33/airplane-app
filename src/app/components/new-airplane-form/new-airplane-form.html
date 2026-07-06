@@ -1,42 +1,114 @@
-<form class="flex flex-col gap-4 max-w-md mx-auto my-10" (submit)="submitForm($event)">
-    <label>
-        Tail number
-        <input class="border rounded p-2 w-full" type="text" [formField]="airplaneForm.tailNumber" />
-        @if (airplaneForm.tailNumber().touched() && airplaneForm.tailNumber().invalid()) {
-        <mat-error class="text-red-600">
-            {{airplaneForm.tailNumber().errors()[0].message}}
-        </mat-error>
-        }
-    </label>
+<html>
 
-    <label>
-        Model
-        <input class="border rounded p-2 w-full" type="text" [formField]="airplaneForm.model" />
-    </label>
+<body>
+    <form class="flex flex-col gap-4 max-w-md mx-auto my-10 bg-slate-200 rounded" (submit)="submitForm($event)">
+        <div class="space-y-12 rounded">
+            <div class="container p-4 rounded">
+                <h2 class="font-bold mt-1">New Airplane Form</h2>
+                <p class="mt-1 text-sm/4">Please fill out this form to create a new airplane.</p>
 
-    <label>
-        Manufacturer
-        <input class="border rounded p-2 w-full" type="text" [formField]="airplaneForm.manufacturer" />
-    </label>
+                <div class="mt-2 grid grid-cols-1 gap-2 m-2">
+                    <div class="flex flex-col m-2 pt-4">
+                        <mat-form-field appearance="outline" floatLabel="auto">
+                            <mat-label>Tailnumber:</mat-label>
+                            <input matInput placeholder="Enter the tailnumber" type="text"
+                                [formField]="airplaneForm.tailNumber" />
+                        </mat-form-field>
+                        @if (airplaneForm.tailNumber().touched() && airplaneForm.tailNumber().invalid()) {
+                        <mat-error class="text-red-600 -mt-4 pl-4">
+                            {{airplaneForm.tailNumber().errors()[0].message}}
+                        </mat-error>
+                        }
+                    </div>
 
-    <label>
-        Capacity
-        <input class="border rounded p-2 w-full" type="number" [formField]="airplaneForm.capacity" />
-    </label>
+                    <div class="flex flex-col m-2">
+                        <mat-form-field appearance="outline" floatLabel="auto">
+                            <mat-label>Model:</mat-label>
+                            <input matInput placeholder="Enter the model" type="text"
+                                [formField]="airplaneForm.model" />
+                        </mat-form-field>
+                        @if (airplaneForm.model().touched() && airplaneForm.model().invalid()) {
+                        <mat-error class="text-red-600 -mt-4 pl-4">
+                            {{airplaneForm.model().errors()[0].message}}
+                        </mat-error>
+                        }
+                    </div>
 
-    <label>
-        Maintenance interval flights
-        <input class="border rounded p-2 w-full" type="number"
-            [formField]="airplaneForm.maintenance_details.maintenanceIntervalFlights" />
-    </label>
+                    <div class="flex flex-col m-2">
+                        <mat-form-field appearance="outline" floatLabel="auto">
+                            <mat-label>Manufacturer:</mat-label>
+                            <input matInput placeholder="Enter the manufacturer" type="text"
+                                [formField]="airplaneForm.manufacturer" />
+                        </mat-form-field>
+                        @if (airplaneForm.manufacturer().touched() && airplaneForm.manufacturer().invalid()) {
+                        <mat-error class="text-red-600 -mt-4 pl-4">
+                            {{airplaneForm.manufacturer().errors()[0].message}}
+                        </mat-error>
+                        }
+                    </div>
 
-    <label>
-        Flights since last maintenance
-        <input class="border rounded p-2 w-full" type="number"
-            [formField]="airplaneForm.maintenance_details.flightsSinceLastMaintenance" />
-    </label>
+                    <div class="flex flex-col m-2">
+                        <mat-form-field appearance="outline" floatLabel="auto">
+                            <mat-label>Capacity:</mat-label>
+                            <input matInput placeholder="Enter the capacity" type="number"
+                                [formField]="airplaneForm.capacity" />
+                        </mat-form-field>
+                        @if (airplaneForm.capacity().touched() && airplaneForm.capacity().invalid()) {
+                        <mat-error class="text-red-600 -mt-4 pl-4">
+                            {{airplaneForm.capacity().errors()[0].message}}
+                        </mat-error>
+                        }
+                    </div>
 
-    <button matButton="elevated" type="submit" (click)="addAirplaneClicked()">
-        Create airplane
-    </button>
-</form>
+                    <h2 class="font-bold mt-1">Maintenance Details:</h2>
+
+                    <div class="flex flex-col m-2">
+                        <mat-form-field appearance="outline" floatLabel="auto">
+                            <mat-label>Maintenance Interval (Flights):</mat-label>
+                            <input matInput placeholder="Enter the maintenance interval" type="number"
+                                [formField]="airplaneForm.maintenance_details.maintenanceIntervalFlights" />
+                        </mat-form-field>
+                        @if (airplaneForm.maintenance_details.maintenanceIntervalFlights().touched() &&
+                        airplaneForm.maintenance_details.maintenanceIntervalFlights().invalid()) {
+                        <mat-error class="text-red-600 -mt-4 pl-4">
+                            {{airplaneForm.maintenance_details.maintenanceIntervalFlights().errors()[0].message}}
+                        </mat-error>
+                        }
+                    </div>
+
+                    <div class="flex flex-col m-2">
+                        <mat-form-field appearance="outline" floatLabel="auto">
+                            <mat-label>Flights Since Last Maintenance:</mat-label>
+                            <input matInput placeholder="Enter the flights since last maintenance" type="number"
+                                [formField]="airplaneForm.maintenance_details.flightsSinceLastMaintenance" />
+                        </mat-form-field>
+                        @if (airplaneForm.maintenance_details.flightsSinceLastMaintenance().touched() &&
+                        airplaneForm.maintenance_details.flightsSinceLastMaintenance().invalid()) {
+                        <mat-error class="text-red-600 -mt-4 pl-4">
+                            {{airplaneForm.maintenance_details.flightsSinceLastMaintenance().errors()[0].message}}
+                        </mat-error>
+                        }
+                    </div>
+
+                    <div class="flex flex-col m-2">
+                        <mat-form-field appearance="outline" floatLabel="auto">
+                            <mat-label>Status:</mat-label>
+                            <mat-select [formField]="airplaneForm.maintenance_details.status">
+                                <mat-option value="active">Active</mat-option>
+                                <mat-option value="maintenance">Maintenance</mat-option>
+                                <mat-option value="inactive">Inactive</mat-option>
+                            </mat-select>
+                            <mat-hint>Select status here</mat-hint>
+                        </mat-form-field>
+                    </div>
+
+                    <button matButton="elevated" type="submit" (click)="addAirplaneClicked()">
+                        Create airplane
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

@@ -2,11 +2,13 @@ import { Component, inject, signal } from '@angular/core';;
 import { FormField, form, min, minLength, required, validate } from '@angular/forms/signals';
 import { AirplaneService } from '../../services/airplane-service';
 import { MatButtonModule } from "@angular/material/button";
-import { MatError } from '@angular/material/form-field';
+import { MatError, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'new-airplane-form',
-  imports: [FormField, MatButtonModule, MatError],
+  imports: [FormField, MatButtonModule, MatError, MatFormFieldModule, MatInputModule, MatSelectModule],
   templateUrl: './new-airplane-form.html',
   styleUrl: './new-airplane-form.css',
 })
@@ -22,7 +24,8 @@ export class NewAirplaneForm {
     maintenance_details:
     {
       maintenanceIntervalFlights: 0,
-      flightsSinceLastMaintenance: 0
+      flightsSinceLastMaintenance: 0,
+      status: 'active'
     }
   });
 
@@ -32,11 +35,11 @@ export class NewAirplaneForm {
     required(path.model, { message: 'Model is required' });
     required(path.manufacturer, { message: 'Manufacturer is required' });
     required(path.capacity, { message: 'Capacity is required' });
-    min(path.capacity, 1, {message: 'Value must be greater than 0'})
+    min(path.capacity, 1, { message: 'Value must be greater than 0' })
     required(path.maintenance_details.maintenanceIntervalFlights, { message: 'This field is required' });
-    min(path.maintenance_details.maintenanceIntervalFlights, 1, {message: 'Value must be greater than 0'})
-    required(path.maintenance_details.flightsSinceLastMaintenance, {message: 'This field is required'})
-    min(path.maintenance_details.flightsSinceLastMaintenance, 0, {message: 'Value cannot be negative'})
+    min(path.maintenance_details.maintenanceIntervalFlights, 1, { message: 'Value must be greater than 0' })
+    required(path.maintenance_details.flightsSinceLastMaintenance, { message: 'This field is required' })
+    min(path.maintenance_details.flightsSinceLastMaintenance, 0, { message: 'Value cannot be negative' })
   });
 
 
@@ -56,7 +59,7 @@ export class NewAirplaneForm {
       capacity: this.airplaneForm.capacity().value(),
       maintenanceIntervalFlights: this.airplaneForm.maintenance_details.maintenanceIntervalFlights().value(),
       flightsSinceLastMaintenance: this.airplaneForm.maintenance_details.flightsSinceLastMaintenance().value(),
-      status: 'active'
+      status: this.airplaneForm.maintenance_details.status().value()
     });
   }
 
@@ -70,5 +73,6 @@ interface IAirplaneForm {
   maintenance_details: {
     maintenanceIntervalFlights: number;
     flightsSinceLastMaintenance: number;
+    status: 'active' | 'maintenance' | 'inactive';
   }
 }
