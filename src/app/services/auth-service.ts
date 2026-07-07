@@ -29,7 +29,7 @@ export class AuthService {
           }
           return of({ isSuccess: true })
         }), catchError((error) => {
-          return of({ isSuccess: false, msg: error.error.error })
+          return of({ isSuccess: false, msg: error?.error.error })
         })
       )
   }

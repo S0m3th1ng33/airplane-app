@@ -6,13 +6,14 @@ import { AuthService } from './services/auth-service';
 import { GlobalPositionStrategy, OverlayModule } from '@angular/cdk/overlay';
 import { MatProgressBar } from "@angular/material/progress-bar";
 import { LoadingService } from './services/loading-service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatMenu, MatButton, MatMenuItem, MatMenuTrigger, RouterLink, OverlayModule, MatProgressBar],
+  imports: [RouterOutlet, MatMenu, MatButton, MatMenuItem, MatMenuTrigger, RouterLink, OverlayModule, MatProgressSpinnerModule],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

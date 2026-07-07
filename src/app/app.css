@@ -1,14 +1,15 @@
 @import '@angular/cdk/overlay-prebuilt.css';
 
-.loading-layer{
-    width: 100%;
-    height: 100%;
-    display:grid;
-    place-items: center;
-    background-color: rgba(255, 255, 255, 0.5)
+:host ::ng-deep .loading-backdrop {
+  background: rgba(255, 255, 255, 0.5);
 }
 
-.component-loading-overlay{
-    width: var(--loading-overlay-width);
-    height: var(--loading-overlay-height);
+.loading-layer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 2;
 }

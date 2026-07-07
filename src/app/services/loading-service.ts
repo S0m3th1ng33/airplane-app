@@ -9,7 +9,7 @@ export class LoadingService {
   readonly isLoading = computed(() => this.httpLoad() > 0)
 
   show() {
-    this.httpLoad.update((x) => x++);
+    this.httpLoad.update((x) => x + 1);
   }
   hide() {
     this.httpLoad.update((x) => Math.max(0, x - 1));

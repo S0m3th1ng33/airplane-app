@@ -4,7 +4,7 @@
   <table mat-table [dataSource]="planes" class="table-auto">
     @for(column of getProperties(planes); track column) {
     <ng-container [matColumnDef]="column">
-      <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+      <th mat-header-cell *matHeaderCellDef class="font-bold"> {{column}} </th>
       <td mat-cell *matCellDef="let airplane">
         <a [routerLink]="['/airplanes', airplane.id]">
           {{airplane[column] | tailNumber: column}}
@@ -14,16 +14,18 @@
     }
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <th mat-header-cell *matHeaderCellDef class="font-bold">Actions</th>
       <td mat-cell *matCellDef="let airplane">
-        <button mat-icon-button [routerLink]="[`/airplanes/edit/${airplane.id}`]" aria-label="Edit button">
-          <mat-icon>edit</mat-icon>
-          <span class="invisible">Edit airplane</span>
-        </button>
-        <button mat-icon-button (click)="deleteAirplane(airplane.id)" aria-label="Edit button">
-          <mat-icon>delete</mat-icon>
-          <span class="invisible">Delete the airplane</span>
-        </button>
+        <div class="grid grid-cols-2 place-items-center">
+          <button mat-icon-button [routerLink]="[`/airplanes/edit/${airplane.id}`]" aria-label="Edit button" class="flex-col">
+            <mat-icon>edit</mat-icon>
+            <span class="invisible">Edit airplane</span>
+          </button>
+          <button mat-icon-button (click)="deleteAirplane(airplane.id)" aria-label="Edit button" class="flex-col">
+            <mat-icon>delete</mat-icon>
+            <span class="invisible">Delete the airplane</span>
+          </button>
+        </div>
       </td>
     </ng-container>
 

@@ -1,8 +1,5 @@
 <div class="loadingContainer" cdkOverlayOrigin #origin="cdkOverlayOrigin">
 
-    <head>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    </head>
     @if (authService.isLoggedIn())
     {
     <button matButton [mat-menu-trigger-for]="menu">Menu</button>
@@ -17,13 +14,15 @@
     {
     <router-outlet />
     }
-    <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="origin"
-        [cdkConnectedOverlayPanelClass]="'component-loading-overlay'" [cdkConnectedOverlayOpen]="true"
+    <ng-template cdkConnectedOverlay
+        [cdkConnectedOverlayOrigin]="origin"
         [cdkConnectedOverlayHasBackdrop]="true"
+        [cdkConnectedOverlayOpen]="ls.isLoading()"
         cdkConnectedOverlayUsePopover="global"
+        class="w-full h-full"
         >
-        <div class="loading-layer">
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <div class="loading-layer mx-auto">
+            <mat-spinner mode="indeterminate"></mat-spinner>
         </div>
     </ng-template>
 
