@@ -1,4 +1,4 @@
-@if(airplane())
+@if((airplane$ | async); as airplane)
 {
 <mat-card [ngClass]="cardTCSS">
     <mat-card-header appearance="outlined">
@@ -6,23 +6,22 @@
 
         </div>
         <mat-card-title>Airplane's details</mat-card-title>
-        <mat-card-subtitle><hr class="h-px  my-2 bg-gray-950 border-0 max-w-full"></mat-card-subtitle>
+        <mat-card-subtitle>
+            <hr class="h-px  my-2 bg-gray-950 border-0 max-w-full">
+        </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-       <p>tailNumber: {{airplane()?.tailNumber| tailNumber:'tailNumber'}}</p>
-       <p>model: {{airplane()?.model}}</p>
-       <p>manufacturer: {{airplane()?.manufacturer}}</p>
-       <p>capacity: {{airplane()?.capacity}}</p>
-       <p>status: {{airplane()?.status}}</p>
-       <p>maintenanceIntervalFlights: {{airplane()?.maintenanceIntervalFlights}}</p>
-       <p>flightsSinceLastMaintenance: {{airplane()?.flightsSinceLastMaintenance}}</p>
-       <app-progress-bar
-       [maintenanceIntervalFlights]="airplane()!.maintenanceIntervalFlights"
-       [flightsSinceLastMaintenance]="airplane()!.flightsSinceLastMaintenance"
-       [status]="airplane()!.status"
-       (addFlight)="IncreaseFlights()"
-       >
-       </app-progress-bar>
+        <p>tailNumber: {{airplane?.tailNumber| tailNumber:'tailNumber'}}</p>
+        <p>model: {{airplane?.model}}</p>
+        <p>manufacturer: {{airplane?.manufacturer}}</p>
+        <p>capacity: {{airplane?.capacity}}</p>
+        <p>status: {{airplane?.status}}</p>
+        <p>maintenanceIntervalFlights: {{airplane?.maintenanceIntervalFlights}}</p>
+        <p>flightsSinceLastMaintenance: {{airplane?.flightsSinceLastMaintenance}}</p>
+        <app-progress-bar [maintenanceIntervalFlights]="airplane!.maintenanceIntervalFlights"
+            [flightsSinceLastMaintenance]="airplane!.flightsSinceLastMaintenance" [status]="airplane!.status"
+            (addFlight)="IncreaseFlights()">
+        </app-progress-bar>
     </mat-card-content>
 </mat-card>
 }

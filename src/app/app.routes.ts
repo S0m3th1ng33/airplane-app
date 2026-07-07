@@ -3,7 +3,8 @@ import { AirplaneComponent } from './components/airplane-component/airplane-comp
 import { AirplaneDetails } from './components/airplane-details/airplane-details';
 import { NewAirplaneForm } from './components/new-airplane-form/new-airplane-form';
 import { Login } from './components/login/login';
-import { authGuard } from './auth-guard-guard';
+import { authGuard } from './auth-guard';
+import { EditAirplaneForm } from './components/edit-airplane-form/edit-airplane-form';
 
 export const routes: Routes = [
     {
@@ -11,6 +12,12 @@ export const routes: Routes = [
         //Eager
         component: AirplaneComponent,
         title: 'Airplanes',
+        canActivate: [authGuard]
+    },
+    {
+        path: 'airplanes/edit/:id',
+        loadComponent: () => EditAirplaneForm,
+        title: 'New Airplane Form',
         canActivate: [authGuard]
     },
     {

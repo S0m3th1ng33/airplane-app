@@ -5,7 +5,7 @@ import { MatFormField, MatLabel, MatError } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from "@angular/material/button";
 import { AuthService, ILoginDetails } from '../../services/auth-service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -19,6 +19,7 @@ export class Login {
   authService = inject(AuthService);
   router = inject(Router);
   snackbar = inject(MatSnackBar);
+  private route = inject(ActivatedRoute);
 
   loginDetails = signal<ILoginDetails>({
     email: '',
@@ -32,9 +33,13 @@ export class Login {
   })
 
   signIn() {
+
+    //Looket at jwtHelper, and in a different case return tokenNotExpired() can work
     this.authService.login(this.loginDetails()).subscribe(response => {
       if (response.isSuccess) {
-        this.router.navigate(['/airplanes']);
+        //If we wanted to access a page first without loging in, after the login we are redirected to that page
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+        this.router.navigate([returnUrl || '/airplanes']);
       }
       else {
         this.snackbar.open(response.msg ?? 'Unknown error', 'Close', {

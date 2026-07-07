@@ -1,9 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
-import {MatButton} from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 import { AuthService } from './services/auth-service';
-import { RouterLink } from '@angular/router';
+
 
 
 
@@ -22,3 +22,14 @@ export class App {
 }
 
 export const baseAPIPATH = 'http://localhost:3000/api'
+
+export interface IAirplaneForm {
+  tailNumber: string;
+  model: string;
+  manufacturer: string;
+  capacity: number;
+  maintenance_details: {
+    maintenanceIntervalFlights: number;
+    status: 'active' | 'maintenance' | 'inactive';
+  }
+}
