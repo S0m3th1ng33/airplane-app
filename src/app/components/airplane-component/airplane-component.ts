@@ -6,7 +6,7 @@ import { RouterLink } from "@angular/router";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { defer, finalize, tap } from 'rxjs';
+import { defer, finalize, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
@@ -53,11 +53,11 @@ export class AirplaneComponent implements OnInit {
       autoFocus: true,
     })
       .afterClosed()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe()
       .subscribe((confirm: boolean) => {
         if (confirm) {
           console.log(confirm + "Delete confirmed if id: " + id)
-          this.airplaneService.deleteAirplane(id);
+          this.airplaneService.deleteAirplane(id).pipe(switchMap(() => this.airplaneService.getAirplanes())).subscribe();
         }
         else {
           console.log(confirm + "delete deny")

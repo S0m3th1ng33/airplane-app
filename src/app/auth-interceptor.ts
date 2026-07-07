@@ -1,6 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { AuthService } from './services/auth-service';
 import { inject } from '@angular/core';
+import { delay } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
@@ -11,5 +12,5 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       headers: req.headers.append('Authorization', `Bearer ${authService.token()}`)
     }
   )
-  return next(modRequest);
+  return next(modRequest).pipe(delay(Math.random() * 1000));
 };

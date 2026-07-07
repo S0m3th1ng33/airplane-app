@@ -1,0 +1,14 @@
+@import '@angular/cdk/overlay-prebuilt.css';
+
+.loading-layer{
+    width: 100%;
+    height: 100%;
+    display:grid;
+    place-items: center;
+    background-color: rgba(255, 255, 255, 0.5)
+}
+
+.component-loading-overlay{
+    width: var(--loading-overlay-width);
+    height: var(--loading-overlay-height);
+}

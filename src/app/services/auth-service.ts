@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, of, switchMap } from 'rxjs';
+import { baseAPIPATH } from '../app';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class AuthService {
 
 
   login(info: ILoginDetails): Observable<{ isSuccess: boolean, msg?: string }> {
-    return this.http.post<SessionInfo>('http://localhost:3000/api/auth/login', info)
+    return this.http.post<SessionInfo>(`${baseAPIPATH}/auth/login`, info)
       .pipe(
         switchMap(response => {
           if (response?.token) {

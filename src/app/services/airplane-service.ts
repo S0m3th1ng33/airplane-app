@@ -82,11 +82,11 @@ export class AirplaneService {
   }
 
   editAirplane(input: Partial<IAirplane>, id: string) {
-    this.http.put<IAirplane>(`${baseAPIPATH}/airplanes/${id}`, input, {}).subscribe();
+    return this.http.put<IAirplane>(`${baseAPIPATH}/airplanes/${id}`, input, {})
   }
 
   deleteAirplane(id: string) {
-    this.http.delete(`${baseAPIPATH}/airplanes/${id}`).subscribe();
+    return this.http.delete(`${baseAPIPATH}/airplanes/${id}`)
   }
 
 }

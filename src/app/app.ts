@@ -3,13 +3,16 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatButton } from '@angular/material/button';
 import { AuthService } from './services/auth-service';
+import { GlobalPositionStrategy, OverlayModule } from '@angular/cdk/overlay';
+import { MatProgressBar } from "@angular/material/progress-bar";
+import { LoadingService } from './services/loading-service';
 
 
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatMenu, MatButton, MatMenuItem, MatMenuTrigger, RouterLink],
+  imports: [RouterOutlet, MatMenu, MatButton, MatMenuItem, MatMenuTrigger, RouterLink, OverlayModule, MatProgressBar],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -17,7 +20,7 @@ export class App {
 
   protected readonly title = signal('airplane-app');
   authService = inject(AuthService)
-
+  ls = inject(LoadingService)
 
 }
 

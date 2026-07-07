@@ -1,17 +1,30 @@
-<head>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-@if (authService.isLoggedIn())
-{
-<button matButton [mat-menu-trigger-for]="menu">Menu</button>
-<mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['/airplanes']">Airplanes</button>
-    <button mat-menu-item [routerLink]="['/airplanes/new']">New Airplane</button>
-    <button mat-menu-item (click)="authService.logout()">Logout</button>
-</mat-menu>
-<router-outlet />
-}
-@else
-{
-<router-outlet />
-}
+<div class="loadingContainer" cdkOverlayOrigin #origin="cdkOverlayOrigin">
+
+    <head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    @if (authService.isLoggedIn())
+    {
+    <button matButton [mat-menu-trigger-for]="menu">Menu</button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['/airplanes']">Airplanes</button>
+        <button mat-menu-item [routerLink]="['/airplanes/new']">New Airplane</button>
+        <button mat-menu-item (click)="authService.logout()">Logout</button>
+    </mat-menu>
+    <router-outlet />
+    }
+    @else
+    {
+    <router-outlet />
+    }
+    <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="origin"
+        [cdkConnectedOverlayPanelClass]="'component-loading-overlay'" [cdkConnectedOverlayOpen]="true"
+        [cdkConnectedOverlayHasBackdrop]="true"
+        cdkConnectedOverlayUsePopover="global"
+        >
+        <div class="loading-layer">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+    </ng-template>
+
+</div>
